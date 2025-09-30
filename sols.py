@@ -5,10 +5,6 @@ class MaxUnionFind:
         self.max = nums[:]
         self.nums = nums
     
-    def make(self, v):
-        self.parent[v] = v
-        self.max[v] = v
-    
     def find(self, v):
         if v == self.parent[v]:
             return v
