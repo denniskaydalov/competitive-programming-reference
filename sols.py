@@ -96,3 +96,35 @@ class SegmentTree:
         self.update_full(1, 0, len(self.nums)-1, index, val)
 
 # }}}
+
+# Topological Sort, Khans {{{
+
+# g is an adjancency map
+def topo_sort(g):
+    d = dict()
+    q = []
+    t = []
+
+    for i in g:
+        for j in g[i]:
+            d[j] = d.get(j, 0) + 1
+
+    for i in g:
+        if d.get(i, 0) == 0:
+            q.append(i)
+
+    while q:
+        n = q.pop(0)
+        t.append(n)
+
+        for i in g[n]:
+            d[i] -= 1
+
+            if d[i] == 0:
+                q.append(i)
+
+    if len(t) != len(g):
+        return None
+    return t
+
+# }}}
