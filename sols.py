@@ -128,3 +128,38 @@ def topo_sort(g):
     return t
 
 # }}}
+
+# Systems of Linear Equations, Gauss Jordan Elimination {{{
+# example input:
+# a = [[4, 1], [1, -1]]
+# b = [5, 10]
+# example output: [3.0, -7.0]
+
+def gauss_jordan_elimination(a, b):
+    aug_matrix = [a[i] + [b[i]] for i in range(len(a))]
+
+    N = len(aug_matrix)
+    M = len(aug_matrix[0])
+
+    for i in range(N):
+        if aug_matrix[i][i] == 0:
+            for j in range(i + 1, N):
+                if aug_matrix[j][i] != 0:
+                    aug_matrix[i], aug_matrix[j] = aug_matrix[j], aug_matrix[i]
+                    break
+            else:
+                return None
+
+        for j in range(N):
+            if i != j:
+                ratio = aug_matrix[j][i] / aug_matrix[i][i]
+                for k in range(M):
+                    aug_matrix[j][k] -= ratio * aug_matrix[i][k]
+
+    for i in range(N):
+        divisor = aug_matrix[i][i]
+        for j in range(M):
+            aug_matrix[i][j] /= divisor
+
+    return [round(aug_matrix[i][-1], 6) for i in range(len(aug_matrix))]
+# }}}
